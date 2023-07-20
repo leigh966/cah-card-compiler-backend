@@ -21,4 +21,10 @@ CREATE TABLE cards (
     card_text VARCHAR(50) NOT NULL,
     contributer_id INTEGER NOT NULL,
     FOREIGN KEY(contributer_id) REFERENCES contributers(contributer_id)
-)
+);
+
+CREATE TABLE sessions (
+    session_id TEXT PRIMARY KEY,
+    contributer_id INTEGER NOT NULL,
+    FOREIGN KEY(contributer_id) REFERENCES contributers(contributer_id)
+);
