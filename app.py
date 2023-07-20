@@ -2,7 +2,11 @@ from flask import Flask, request
 import cardCompilerDbOperations
 import authorization
 import dbOperations
+from flask_cors import CORS
+
+
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/user", methods=["POST"])
 def register():
