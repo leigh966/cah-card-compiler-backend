@@ -63,3 +63,15 @@ class TestCardCompilerDbOperations(unittest.TestCase):
         where = f'contributer_id="{expected_contributer_id}" AND card_text="{expected_card_text}"'
         actual = dbOperations.select("*","cards", where)
         self.assertEqual(len(actual), 0)
+
+    def test_no_duplicate_register(self):
+        username = "blah"
+        group_id = cardCompilerDbOperations.create_group("some name")
+        cardCompilerDbOperations.register_contributer(username, "rujghbif", group_id)
+        self.assertRaises(ValueError, cardCompilerDbOperations.register_contributer,
+                          username, "rwerfyuhdsgba", group_id)
+        where = f'group_id="{group_id}" AND contributer_name="{username}"'
+        actual = dbOperations.select("contributer_name,group_id",
+                                     "contributers", where)
+        self.assertEqual(len(actual), 1)
+        
