@@ -18,6 +18,8 @@ def register():
                                                    group_id)
    except KeyError:
      return "Group not found", 404
+   except ValueError:
+      return "Username taken in this group", 409
    return "Contributer Registered", 201
 
 
