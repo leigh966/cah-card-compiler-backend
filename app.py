@@ -10,10 +10,12 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/user", methods=["POST"])
 def register():
+   username = request.form["username"]
+   password = request.form["password"]
+   group_id = request.form["group_id"]
    try:
-    cardCompilerDbOperations.register_contributer(request.form["username"],
-                                                 request.form["password"],
-                                                   request.form["group_id"])
+    cardCompilerDbOperations.register_contributer(username, password,
+                                                   group_id)
    except KeyError:
      return "Group not found", 404
    return "Contributer Registered", 201
