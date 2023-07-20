@@ -10,8 +10,15 @@ def create_group(group_name):
     # return game_id
     return group_id
 
+def name_taken_in_group(name, group_id):
+    where = f'contributer_name="{name}" AND group_id="{group_id}"'
+    search = dbOperations.select("*", "contributers", where)
+    return len(search) > 0
+
 def register_contributer(contributer_name, contributer_password, group_id):
-    # assumes contributer name is unique
+    if name_taken_in_group(contributer_name, group_id):
+        raise ValueError("That username is taken in this group")
+
     # if the group_id does not exist
         # raise a key error
     where = f'group_id="{group_id}"'
