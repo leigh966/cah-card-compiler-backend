@@ -6,7 +6,7 @@ def create_group(group_name):
     # generate game_id
     group_id = uuid.uuid4()
     # create group with name [group_name]
-    dbOperations.create_record("groups", "group_id,group_name", f'"{str(group_id)}","{group_name}"')
+    dbOperations.create_record("groups", "group_id,group_name", f"'{str(group_id)}','{group_name}'")
     # return game_id
     return group_id
 
