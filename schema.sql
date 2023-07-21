@@ -1,7 +1,8 @@
-DROP TABLE IF EXISTS groups;
-DROP TABLE IF EXISTS contributers;
 DROP TABLE IF EXISTS cards;
 DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS contributers;
+DROP TABLE IF EXISTS groups;
+
 
 CREATE TABLE groups (
     group_id CHAR(36) PRIMARY KEY,
