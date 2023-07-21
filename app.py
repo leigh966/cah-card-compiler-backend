@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify, send_file
 import cardCompilerDbOperations
 import authorization
 import dbOperations
@@ -54,6 +54,40 @@ def get_all_cards():
    # DEBUG ONLY
    cards=dbOperations.select("*", "cards", "True")
    return str(cards), 200
+
+@app.route("/my_cards", methods=["GET"])
+def get_my_cards():
+    session_id = request.headers["session_id"]
+    user_id = ""
+    try:
+      user_id = authorization.get_user_id(session_id)
+    except:
+       return "Bad session", 401
+    return jsonify(cardCompilerDbOperations.get_my_cards(user_id))
+
+from openpyxl import Workbook
+from datetime import datetime
+@app.route("/report", methods=["GET"])
+def get_report():
+    session_id = request.headers["session_id"]
+    user_id = ""
+    try:
+      user_id = authorization.get_user_id(session_id)
+    except:
+       return "Bad session", 401
+    where = f'contributer_id="{user_id}"'
+    group_id = dbOperations.select("group_id", "contributers", where)[0][0]
+    join = dbOperations.get_inner_join_expression("cards", "contributers", "cards.contributer_id=contributers.contributer_id")
+    cards = dbOperations.select("card_text", join, f'group_id="{group_id}"')
+    print("cards: ", cards)
+    wb = Workbook()
+    sheet = wb.active
+    for y in range(0,len(cards)):
+       sheet["A"+str(y+1)] = cards[y][0]
+    now = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
+    path = f"./reports/{user_id}-{now}.xls"
+    wb.save(path)
+    return send_file(path, download_name='report.xls', as_attachment=False)
 
 if __name__ == '__main__':
    app.secret_key='secretivekeyagain'
