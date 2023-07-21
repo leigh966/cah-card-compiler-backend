@@ -43,3 +43,10 @@ def add_card(card_text, contributer_id):
     fields = "card_text,contributer_id"
     values = f'"{card_text}","{contributer_id}"'
     dbOperations.create_record("cards", fields, values)
+
+def get_my_cards(contributer_id):
+    # assumes that the contributer_id is valid
+    where = f'contributer_id="{contributer_id}"'
+    cards = dbOperations.select("card_id,card_text", "cards", where)
+    return [{"card_id": record[0], "card_text": record[1]} for record in cards]
+    

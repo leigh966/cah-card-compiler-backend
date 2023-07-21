@@ -74,4 +74,20 @@ class TestCardCompilerDbOperations(unittest.TestCase):
         actual = dbOperations.select("contributer_name,group_id",
                                      "contributers", where)
         self.assertEqual(len(actual), 1)
+
+    def test_get_my_cards(self):
+        import init_db # clear the db
         
+        expected_card_text = "this is some card text"
+        group_id = str(cardCompilerDbOperations.create_group("some name"))
+        name="blah"
+        cardCompilerDbOperations.register_contributer(name, 
+                                                      "fhbujse", 
+                                                      group_id)
+        where = f'group_id="{group_id}" AND contributer_name="{name}"'
+        expected_contributer_id = dbOperations.select("contributer_id",
+                                     "contributers", where)[0][0]
+        cardCompilerDbOperations.add_card(expected_card_text, expected_contributer_id)
+        actual = cardCompilerDbOperations.get_my_cards(expected_contributer_id)
+        self.assertEqual(len(actual), 1)
+        self.assertEqual(actual[0]["card_text"], expected_card_text)
