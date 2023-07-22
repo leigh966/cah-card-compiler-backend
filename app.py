@@ -3,10 +3,12 @@ import cardCompilerDbOperations
 import authorization
 import dbOperations
 from flask_cors import CORS
-
+import os
 
 app = Flask(__name__)
 cors = CORS(app, resources={r'/*': {'origins': '*'}})
+if not os.path.exists("reports"):
+   os.mkdir("reports")
 
 @app.route('/user', methods=['POST'])
 def register():
