@@ -21,7 +21,7 @@ def login(username, password, group_id):
     raise ValueError("Incorrect Password")
   session_id = str(uuid.uuid4())
   fields = "session_id,contributer_id"
-  values = f'"{session_id}",{user[0]}'
+  values = f"'{session_id}',{user[0]}"
   dbOperations.create_record("sessions", fields, values)
   return session_id
   
