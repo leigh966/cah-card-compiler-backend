@@ -50,3 +50,9 @@ def get_my_cards(contributer_id):
     cards = dbOperations.select('card_id,card_text', 'cards', where)
     return [{'card_id': record[0], 'card_text': record} for record in cards]
     
+def get_group_name(group_id):
+    where = f"group_id='{group_id}'"
+    names = dbOperations.select("group_name", "groups", where)
+    if len(names) == 0:
+        return None
+    return names[0][0]

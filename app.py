@@ -89,3 +89,9 @@ def get_report():
     wb.save(path)
     return send_file(path, download_name="report.xls", as_attachment=False)
 
+@app.route('/group/<group_id>', methods=["GET"])
+def get_group(group_id):
+   name = cardCompilerDbOperations.get_group_name(group_id)
+   if name is None:
+      return "Group not found", 404
+   return name, 200
