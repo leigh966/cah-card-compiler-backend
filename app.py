@@ -69,7 +69,7 @@ def get_my_cards():
 
 from openpyxl import Workbook
 from datetime import datetime
-@app.route('/report', methods=['GET, POST'])
+@app.route('/report', methods=['GET','POST'])
 def get_report():
     session_id = request.headers['session_id']
     user_id = ''
