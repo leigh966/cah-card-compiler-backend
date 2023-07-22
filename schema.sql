@@ -10,7 +10,7 @@ CREATE TABLE groups (
 );
 
 CREATE TABLE contributers (
-    contributer_id BIGINT PRIMARY KEY,
+    contributer_id SERIAL BIGINT PRIMARY KEY,
     password_hash VARCHAR(100) NOT NULL,
     contributer_name VARCHAR(20) NOT NULL,
     group_id CHAR(36) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE contributers (
 );
 
 CREATE TABLE cards (
-    card_id BIGINT PRIMARY KEY,
+    card_id SERIAL BIGINT PRIMARY KEY,
     card_text VARCHAR(50) NOT NULL,
     contributer_id BIGINT NOT NULL,
     FOREIGN KEY(contributer_id) REFERENCES contributers(contributer_id)
