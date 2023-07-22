@@ -11,7 +11,7 @@ def check_password(password, hashed_password):
   return pbkdf2_sha256.verify(password, hashed_password)
 
 def get_user_id(session_id):
-  where = f'session_id="{session_id}"'
+  where = f"session_id='{session_id}'"
   return dbOperations.select("contributer_id", "sessions", where)[0][0]
 
 def login(username, password, group_id):
