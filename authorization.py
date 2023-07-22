@@ -15,7 +15,7 @@ def get_user_id(session_id):
   return dbOperations.select("contributer_id", "sessions", where)[0][0]
 
 def login(username, password, group_id):
-  where = f'group_id="{group_id}" AND contributer_name="{username}"'
+  where = f"group_id='{group_id}' AND contributer_name='{username}'"
   user = dbOperations.select("contributer_id,password_hash", "contributers", where)[0]
   if not check_password(password, user[1]):
     raise ValueError("Incorrect Password")
