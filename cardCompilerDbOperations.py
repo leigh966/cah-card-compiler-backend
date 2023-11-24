@@ -48,7 +48,7 @@ def get_my_cards(contributer_id):
     # assumes that the contributer_id is valid
     where = f"contributer_id='{contributer_id}'"
     cards = dbOperations.select('card_id,card_text', 'cards', where)
-    return [{'card_id': record[0], 'card_text': record} for record in cards]
+    return [{'card_id': record[0], 'card_text': record[1]} for record in cards]
     
 def get_group_name(group_id):
     where = f"group_id='{group_id}'"
