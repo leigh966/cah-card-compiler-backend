@@ -97,3 +97,8 @@ def get_group(group_id):
    if name is None:
       return "Group not found", 404
    return name, 200
+
+# Good for waking the application if it has gone to sleep
+@app.route("/")
+def is_alive():
+   return "", 200
